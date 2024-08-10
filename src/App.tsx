@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import LoginContainer from "./containers/LoginContainer/LoginContainer";
+import SignupContainer from "./containers/SignupContainer/SignupContainer";
+import LazyLoadComponent from "./components/LazyLoadComponent";
+
+const EventContainer = React.lazy(
+  () => import("./containers/EventContainer/EventContainer")
+);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="login" element={<LoginContainer />} />
+      <Route path="signup" element={<SignupContainer />} />
+      <Route
+        path="/events/*"
+        element={<LazyLoadComponent Component={EventContainer} />}
+      />
+    </Routes>
   );
 }
 
