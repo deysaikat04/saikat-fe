@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import LoginContainer from "./containers/LoginContainer/LoginContainer";
 import SignupContainer from "./containers/SignupContainer/SignupContainer";
 import LazyLoadComponent from "./components/LazyLoadComponent";
@@ -18,6 +18,7 @@ function App() {
           element={<LazyLoadComponent Component={EventContainer} />}
         />
       </Route>
+      <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
 }

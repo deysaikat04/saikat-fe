@@ -1,14 +1,19 @@
 import React from "react";
 import moment from "moment";
-import { Plus } from "lucide-react";
 
 interface EventVotesInterface {
   date: string;
   people: string[];
   suitableDates: string[];
+  handleVoteCheckCLick: (date: string) => void;
 }
 
-const EventVotes = ({ date, people, suitableDates }: EventVotesInterface) => {
+const EventVotes = ({
+  date,
+  people,
+  suitableDates,
+  handleVoteCheckCLick,
+}: EventVotesInterface) => {
   const isSuitableDate = suitableDates?.includes(date);
 
   return (
@@ -43,14 +48,20 @@ const EventVotes = ({ date, people, suitableDates }: EventVotesInterface) => {
             </dd>
           </dl>
         </div>
-        <div>
-          <button
-            type="button"
-            className="text-gray-900 bg-white border border-blue-300 focus:outline-none hover:bg-blue-50 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 flex flex-row gap-2"
+        <div className="flex items-center">
+          <input
+            id="checked-checkbox"
+            type="checkbox"
+            value=""
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            onClick={() => handleVoteCheckCLick(date)}
+          />
+          <label
+            htmlFor="checked-checkbox"
+            className="ms-2 text-sm font-medium text-gray-900"
           >
-            <Plus className="text-blue-500" />
-            <span className="text-blue-500 ">Add vote</span>
-          </button>
+            Vote
+          </label>
         </div>
       </div>
       <hr className="my-8" />
