@@ -9,9 +9,9 @@ interface LoginResponse {
   email: string;
 }
 
-const signup = (username: string, email: string, password: string) => {
+const signup = (name: string, email: string, password: string) => {
   return apiService.post(`/user/signup`, {
-    username,
+    name,
     email,
     password,
   });

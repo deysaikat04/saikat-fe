@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { authAPI } from "./authAPI";
 import { RootState } from "..";
@@ -16,7 +16,7 @@ export interface AuthState {
   isLoggedIn: boolean;
   isLoading: boolean;
   isAuthenticated: boolean;
-  loginError: null | string;
+  error: null | string;
 }
 
 // initial state
@@ -25,7 +25,7 @@ const initialState: AuthState = {
   isLoggedIn: false,
   isLoading: false,
   isAuthenticated: false,
-  loginError: null,
+  error: null,
 };
 
 export const login =
@@ -45,50 +45,39 @@ export const login =
     }
   };
 
-export const signup = createAsyncThunk(
-  "auth/signup",
-  async (
-    {
-      username,
-      email,
-      password,
-    }: { username: string; email: string; password: string },
-    thunkAPI
-  ) => {
+export const signUp =
+  ({
+    name,
+    email,
+    password,
+  }: {
+    name: string;
+    email: string;
+    password: string;
+  }) =>
+  async (dispatch: any) => {
     try {
-      const response = await authAPI.signup(username, email, password);
-      return response;
+      const response = await authAPI.signup(name, email, password);
+      if (response.data?.token) {
+        await storeTokenInLocalStorage(response.data?.token as string);
+      }
+      dispatch(setUser(response.data));
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        dispatch(setUserError(error?.response?.data));
+      }
       console.error(error);
-      return thunkAPI.rejectWithValue({ error });
     }
-  }
-);
+  };
 
-// export const login = createAsyncThunk(
-//   "auth/login",
-//   async (
-//     { email, password }: { email: string; password: string },
-//     thunkAPI
-//   ) => {
-//     try {
-//       const user = await authAPI.loginWithPassword(email, password);
-//       return user;
-//     } catch (error: any) {
-//       console.error(error);
-//       return thunkAPI.rejectWithValue({ error: error.code });
-//     }
-//   }
-// );
-
-export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+export const logout = () => async (dispatch: any) => {
   try {
     await authAPI.logout();
+    dispatch(resetUser());
   } catch (error) {
     console.error(error);
-    return thunkAPI.rejectWithValue({ error });
   }
-});
+};
 
 // authSlice
 export const authSlice = createSlice({
@@ -105,11 +94,11 @@ export const authSlice = createSlice({
       if (payload?.success) {
         state.isLoggedIn = true;
         state.isAuthenticated = true;
-        state.loginError = null;
+        state.error = null;
       } else {
         state.isLoggedIn = false;
         state.isAuthenticated = false;
-        state.loginError = payload?.message;
+        state.error = payload?.message;
       }
       state.isLoading = false;
     },
@@ -117,7 +106,13 @@ export const authSlice = createSlice({
       const { payload } = action;
       state.isLoggedIn = false;
       state.isAuthenticated = false;
-      state.loginError = payload?.message;
+      state.error = payload?.message;
+    },
+    resetUser: (state) => {
+      state.isLoggedIn = false;
+      state.isAuthenticated = false;
+      state.error = null;
+      state.user = null;
     },
     setLoading: (state) => {
       state.isLoading = true;
@@ -128,13 +123,18 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setUser, setUserError, setLoading, setAuthenticated } =
-  authSlice.actions;
+export const {
+  setUser,
+  setUserError,
+  resetUser,
+  setLoading,
+  setAuthenticated,
+} = authSlice.actions;
 
 export const isLoggedInFromStore = (state: RootState) => state.auth.isLoggedIn;
 
 export const userDetailsFromStore = (state: RootState) => state.auth.user;
 
-export const loginErrorFromStore = (state: RootState) => state.auth.loginError;
+export const loginErrorFromStore = (state: RootState) => state.auth.error;
 
 export default authSlice.reducer;

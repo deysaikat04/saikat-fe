@@ -4,6 +4,7 @@ import useEventsById from "../../hooks/useEventsById";
 import useEventResultById from "../../hooks/useEventResultById";
 import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import GenericLoader from "../../components/Loader/Generic";
 
 interface EventDetailsContainerProps {
   eventId: string;
@@ -12,7 +13,7 @@ interface EventDetailsContainerProps {
 const EventDetailsContainer = ({ eventId }: EventDetailsContainerProps) => {
   const navigate = useNavigate();
 
-  const { data: eventData } = useEventsById(eventId);
+  const { data: eventData, isFetching } = useEventsById(eventId);
   const { data: eventResultData } = useEventResultById(eventId);
 
   const eventVotes = eventData?.data?.votes || [];
@@ -35,18 +36,26 @@ const EventDetailsContainer = ({ eventId }: EventDetailsContainerProps) => {
           <ChevronLeft />
           <span>Back</span>
         </div>
-        <h2 className="mb-2 text-3xl font-bold leading-none text-gray-700 md:text-4xl ">
-          {eventData?.data?.name}
-        </h2>
-        <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-          {eventVotes.map((aVote: any) => (
-            <EventVotes
-              date={aVote?.date}
-              people={aVote?.people}
-              suitableDates={suitableDates}
-            />
-          ))}
-        </div>
+        {isFetching ? (
+          <div className="col-span-12 flex justify-center m-auto w-full">
+            <GenericLoader />
+          </div>
+        ) : (
+          <>
+            <h2 className="mb-2 text-3xl font-bold leading-none text-gray-700 md:text-4xl ">
+              {eventData?.data?.name}
+            </h2>
+            <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+              {eventVotes.map((aVote: any) => (
+                <EventVotes
+                  date={aVote?.date}
+                  people={aVote?.people}
+                  suitableDates={suitableDates}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Input from "../Input";
 
-export interface FormDataInterface {
+export interface LoginFormDataInterface {
   email: string;
   password: string;
 }
@@ -25,36 +25,30 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.auth);
 
-  const form = useForm<FormDataInterface>({
+  const form = useForm<LoginFormDataInterface>({
     defaultValues: {
-      email: "jake@email.com",
-      password: "123456",
+      email: "",
+      password: "",
     },
-    // defaultValues: {
-    //   email: "",
-    //   password: "",
-    // },
     resolver: zodResolver(formSchema),
   });
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
-  const onSubmit = (data: FormDataInterface, event: any) => {
+  const onSubmit = (data: LoginFormDataInterface, event: any) => {
     event.preventDefault();
     dispatch(login(data));
   };
 
   return (
     <div>
-      {authState?.loginError ? (
+      {authState?.error ? (
         <p className="text-sm text-red-500 pt-2 text-center">
-          {authState?.loginError}
+          {authState?.error}
         </p>
       ) : null}
 
       <form
-        action="#"
-        method="POST"
         className="space-y-4 pt-4"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
