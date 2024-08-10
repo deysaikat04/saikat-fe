@@ -7,9 +7,9 @@ export const clearStorage = async () => {
 };
 
 export const getObject = async (key: string) => {
-  const ret = await localStorage.get({ key: key });
+  const ret = await localStorage.getItem(key);
   if (ret) {
-    return ret.value;
+    return ret;
   }
   return null;
 };

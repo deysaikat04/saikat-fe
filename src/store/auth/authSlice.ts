@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authAPI } from "./authAPI";
 import { RootState } from "..";
 import { storeTokenInLocalStorage } from "../../utils/localStorage";
+import axios from "axios";
 
 export interface UserState {
   email: string;
@@ -37,6 +38,9 @@ export const login =
       }
       dispatch(setUser(response.data));
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        dispatch(setUserError(error?.response?.data));
+      }
       console.error(error);
     }
   };
@@ -109,6 +113,12 @@ export const authSlice = createSlice({
       }
       state.isLoading = false;
     },
+    setUserError: (state, action) => {
+      const { payload } = action;
+      state.isLoggedIn = false;
+      state.isAuthenticated = false;
+      state.loginError = payload?.message;
+    },
     setLoading: (state) => {
       state.isLoading = true;
     },
@@ -118,25 +128,13 @@ export const authSlice = createSlice({
   },
 });
 
-// export actions from slice if any reducers created
-export const { setUser, setLoading, setAuthenticated } = authSlice.actions;
+export const { setUser, setUserError, setLoading, setAuthenticated } =
+  authSlice.actions;
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const isLoggedInFromStore = (state: RootState) => state.auth.isLoggedIn;
 
 export const userDetailsFromStore = (state: RootState) => state.auth.user;
 
 export const loginErrorFromStore = (state: RootState) => state.auth.loginError;
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-/** export const loginThunk = (): AppThunk => (dispatch, getState) => {
-  const isLogged = isLoggedInFromStore(getState());
-  if (isLogged) {
-    // dispatch action here
-  }
-}; */
 
 export default authSlice.reducer;

@@ -13,6 +13,38 @@ class ApiService {
         ] = `bearer ${localStorageToken}`;
       }
     });
+
+    axios.interceptors.request.use(async function (config) {
+      // if (!config.headers) {
+      //   throw new Error("Expected `config.headers` to not be undefined");
+      // }
+      // const expirationTime = await getObject("txp");
+      // const currentTimeInMs = new Date().getTime();
+      // const expirationTimeInMs =
+      //   new Date(expirationTime || "").getTime() - FIVE_MINUTES_IN_MILLISECONDS;
+      // if (expirationTimeInMs < currentTimeInMs) {
+      //   await firebase.auth().currentUser?.reload();
+      //   const token = await firebase.auth().currentUser?.getIdToken(true);
+      //   const idTokenResult = await firebase
+      //     .auth()
+      //     .currentUser?.getIdTokenResult(true);
+      //   await storeTokenInLocalStorage({
+      //     token,
+      //     expirationTime: idTokenResult?.expirationTime,
+      //   });
+      //   config.headers.authorization = `bearer ${token}`;
+      //   axios.defaults.headers.common["authorization"] = `bearer ${token}`;
+      // }
+
+      const localStorageToken: string | null = await getObject("tid");
+      if (localStorageToken) {
+        config.headers.authorization = `bearer ${localStorageToken}`;
+        axios.defaults.headers.common[
+          "authorization"
+        ] = `bearer ${localStorageToken}`;
+      }
+      return config;
+    });
   }
 
   get(url: string, config: AxiosRequestConfig = {}) {

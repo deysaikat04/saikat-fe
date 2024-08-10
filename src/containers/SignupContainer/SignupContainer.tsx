@@ -24,8 +24,13 @@ const SignUpContainer = () => {
           <SignUp />
           <div className="mt-4 text-sm text-gray-600 text-center">
             <p>
-              Already have an account?{" "}
-              <span onClick={() => navigate("/login")}>Login here</span>
+              Already have an account? Login{" "}
+              <span
+                onClick={() => navigate("/login")}
+                className="underline cursor-pointer hover:text-gray-900"
+              >
+                here
+              </span>
             </p>
           </div>
         </div>
