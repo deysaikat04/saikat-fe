@@ -15,7 +15,7 @@ const EventVotes = ({ date, people, suitableDates }: EventVotesInterface) => {
       <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl ">
         {moment(date).format("LL")}{" "}
         {isSuitableDate ? (
-          <span className="font-medium text-sm bg-orange-400 leading mb-2 py-1 px-4 rounded-2xl">
+          <span className="font-medium  text-sm bg-orange-400 leading mb-2 py-1 px-4 rounded-2xl">
             Preferred
           </span>
         ) : (
@@ -39,7 +39,6 @@ const EventVotes = ({ date, people, suitableDates }: EventVotesInterface) => {
           </div>
         </dd>
       </dl>
-      {/* <div className="w-full h-1 bg-slate-200"></div> */}
       <hr className="my-8" />
     </div>
   );

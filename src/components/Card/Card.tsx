@@ -2,11 +2,16 @@ import React from "react";
 
 interface EventCardProps {
   name: string;
+  eventId: string;
+  handleCardClick: (eventId: string) => void;
 }
 
-const Card = ({ name }: EventCardProps) => {
+const Card = ({ name, eventId, handleCardClick }: EventCardProps) => {
   return (
-    <div className="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:shadow-md ">
+    <div
+      className="max-w-sm p-6 m-2 bg-white border border-gray-200 rounded-lg shadow hover:shadow-md "
+      onClick={() => handleCardClick(eventId)}
+    >
       <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
         {name}
       </h5>
