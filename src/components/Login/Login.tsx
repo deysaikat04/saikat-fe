@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useAppDispatch } from "../../hooks";
+import { login } from "../../store/auth/authSlice";
 
 const Login = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(login({ email: "jake@email.com", password: "123456" }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div>
       <form action="#" method="POST" className="space-y-4 pt-4">
