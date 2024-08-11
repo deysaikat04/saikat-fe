@@ -29,6 +29,15 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+#### Libraries Used:
+
+1. **React:** For building the user interface.
+2. **TypeScript:** For adding static types to JavaScript.
+3. **React Query:** For data fetching.
+4. **Redux Toolkit:** For data table.
+5. **tailwindcss:** For styling and layout.
+6. **Zod:** For form validation.
+
 ## Project Screenshots:
 
 ##### Login
