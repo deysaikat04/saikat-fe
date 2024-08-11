@@ -45,8 +45,6 @@ const EventContainer = () => {
   }
   return (
     <div className="flex pt-24 md:p-24 flex-col space-y-4 justify-center m-auto">
-      {/* <Header title={"Events"} /> */}
-
       <div className="flex justify-end">
         <button
           type="button"
@@ -71,7 +69,11 @@ const EventContainer = () => {
               handleCardClick={handleCardClick}
             />
           ))
-        ) : null}
+        ) : (
+          <div className="col-span-12 flex justify-center m-auto w-full">
+            <p className="text-center ">No Events found.</p>
+          </div>
+        )}
       </div>
       {addEventPopUpOpen ? (
         <AddEventPopup

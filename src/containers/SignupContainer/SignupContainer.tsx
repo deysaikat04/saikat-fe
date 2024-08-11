@@ -10,8 +10,6 @@ const SignUpContainer = () => {
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector(isLoggedInFromStore);
 
-  console.log(isLoggedIn);
-
   useEffect(() => {
     if (isLoggedIn) {
       navigate(`/events`);

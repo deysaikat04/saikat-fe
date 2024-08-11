@@ -1,20 +1,25 @@
 import React from "react";
 import moment from "moment";
+import { Vote } from "../../constants/types";
 
 interface EventVotesInterface {
-  date: string;
-  people: string[];
+  date: Date;
+  votes: Vote[];
   suitableDates: string[];
   handleVoteCheckCLick: (date: string) => void;
 }
 
 const EventVotes = ({
   date,
-  people,
+  votes,
   suitableDates,
   handleVoteCheckCLick,
 }: EventVotesInterface) => {
-  const isSuitableDate = suitableDates?.includes(date);
+  const isSuitableDate = suitableDates?.includes(date.toString());
+
+  const people = votes?.find((aVote) => aVote.date === date)?.people;
+
+  const numberOfVotes = people?.length || 0;
 
   return (
     <>
@@ -32,7 +37,7 @@ const EventVotes = ({
           </p>
           <dl>
             <dt className="mb-6 font-semibold leading-none text-gray-900 ">
-              Votes: {people?.length}
+              Votes: {numberOfVotes}
             </dt>
             <dd className="mb-4 text-black sm:mb-5">
               <div className="">
@@ -54,7 +59,7 @@ const EventVotes = ({
             type="checkbox"
             value=""
             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            onClick={() => handleVoteCheckCLick(date)}
+            onClick={() => handleVoteCheckCLick(date.toString())}
           />
           <label
             htmlFor="checked-checkbox"

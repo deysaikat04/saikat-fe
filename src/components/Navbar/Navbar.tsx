@@ -7,8 +7,6 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.auth);
 
-  console.log(authState);
-
   const userName = authState?.user?.name;
 
   const handleLogout = () => {

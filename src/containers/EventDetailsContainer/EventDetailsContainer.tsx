@@ -90,10 +90,10 @@ const EventDetailsContainer = ({ eventId }: EventDetailsContainerProps) => {
                 </div>
               </div>
               <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                {eventVotes.map((aVote: any) => (
+                {eventData?.data?.dates?.map((aDate) => (
                   <EventVotes
-                    date={aVote?.date}
-                    people={aVote?.people}
+                    date={aDate}
+                    votes={eventVotes}
                     suitableDates={suitableDates}
                     handleVoteCheckCLick={handleVoteCheckCLick}
                   />
