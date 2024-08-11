@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Card from "../../components/Card/Card";
-import Header from "../../components/Header/Header";
 import useAllEvents from "../../hooks/useAllEvents";
 import { useNavigate, useParams } from "react-router-dom";
 import EventDetailsContainer from "../EventDetailsContainer";
@@ -17,13 +16,7 @@ const EventContainer = () => {
 
   const { data: eventData, isFetching } = useAllEvents();
 
-  const {
-    mutate: addEvent,
-    isLoading: isApplicantAddSaveLoading,
-    isError: isApplicantAddError,
-    isSuccess: isApplicantAddSuccess,
-    data: addApplicantResp,
-  } = useEventSave();
+  const { mutate: addEvent } = useEventSave();
 
   const [addEventPopUpOpen, setAddEventPopUpOpen] = useState(false);
 
