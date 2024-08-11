@@ -4,6 +4,7 @@ export interface EventByIdAPIResponse {
 }
 
 export interface EventByIdInterface {
+  id: string;
   name: string;
   dates: Date[];
   votes: Vote[];
