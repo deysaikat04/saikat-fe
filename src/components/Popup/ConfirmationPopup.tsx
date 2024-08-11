@@ -18,7 +18,7 @@ const ConfirmationPopup = ({
       <div className="relative p-4 w-full max-w-2xl max-h-full">
         <div className="relative bg-white rounded-lg shadow ">
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
-            <h3 className="text-xl font-semibold text-gray-900 ">
+            <h3 className="text-2xl font-semibold text-gray-900 ">
               Confirm Action
             </h3>
             <button

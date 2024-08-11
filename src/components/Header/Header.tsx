@@ -1,7 +1,7 @@
 import React from "react";
 
 interface HeaderProps {
-  title: String;
+  title: string;
 }
 
 function Header({ title }: HeaderProps) {
