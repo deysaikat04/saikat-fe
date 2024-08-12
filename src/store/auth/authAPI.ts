@@ -10,7 +10,7 @@ interface LoginResponse {
 }
 
 const signup = (name: string, email: string, password: string) => {
-  return apiService.post(`/user/signup`, {
+  return apiService.post(`/user/register`, {
     name,
     email,
     password,
