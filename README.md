@@ -19,7 +19,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 2. **TypeScript:** For adding static types to JavaScript.
 3. **React Query:** For data fetching.
 4. **Redux Toolkit:** For data table.
-5. **tailwindcss:** For styling and layout.
+5. **Tailwindcss:** For styling and layout.
 6. **Zod:** For form validation.
 
 ## Folder Structure
