@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
@@ -22,6 +23,7 @@ const ReactDatePicker = ({ handleChange, label, id }: ReactDatePickerProps) => {
       </label>
       <DatePicker
         selected={date}
+        minDate={moment().toDate()}
         onChange={(date) => {
           if (date) {
             handleChange(date);

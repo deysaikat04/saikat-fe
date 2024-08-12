@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-
+import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import moment from "moment";
+
 import Input from "../Input";
 import ReactDatePicker from "../DatePicker";
-import moment from "moment";
-import { X } from "lucide-react";
 
 interface AddEventPopupProps {
   handleAddEvent: (name: string, dates: string[]) => void;
@@ -23,7 +23,6 @@ const formSchema = z.object({
     .min(4, { message: "Event name must contain at least 6 character(s)." }),
 });
 
-// const AddEventPopup = ({ setOpen, handleSaveVote }: ConfirmationPopupProps) => {
 const AddEventPopup = ({
   handleAddEvent,
   setAddEventPopUpOpen,
